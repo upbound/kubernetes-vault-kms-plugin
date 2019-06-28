@@ -8,7 +8,7 @@ before:
     - go generate ./...
 builds:
 - main: vault/server/grpcServer.go
-- env:
+  env:
   - CGO_ENABLED=0
 archives:
 - replacements:
