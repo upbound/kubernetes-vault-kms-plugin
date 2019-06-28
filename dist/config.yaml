@@ -99,7 +99,7 @@ env_files:
   github_token: ~/.config/goreleaser/github_token
 before:
   hooks:
-  - cd vault && go mod download
+  - go mod download
   - go generate ./...
 github_urls:
   download: https://github.com
