@@ -1,4 +1,0 @@
-18fb72985bf2979dde7d8067149502a7c075245c366f4a3659868c344c6cf8d7  kubernetes-vault-kms-plugin_v0.0.1-next_Linux_i386.tar.gz
-6484148da1c3420412aa5dab6ee92b484b8cbea2f9e8fe2a71e70a75544fbd73  kubernetes-vault-kms-plugin_v0.0.1-next_Darwin_i386.tar.gz
-da82296b8b49ad4183a7b84458532296d0e51ac058705986490c84e772f8376b  kubernetes-vault-kms-plugin_v0.0.1-next_Darwin_x86_64.tar.gz
-89b25aadb8fadc51c396b116b324b97c93427fcce4a79962af2dde3972b7721f  kubernetes-vault-kms-plugin_v0.0.1-next_Linux_x86_64.tar.gz
