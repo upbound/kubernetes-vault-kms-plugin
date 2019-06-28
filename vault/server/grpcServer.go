@@ -8,14 +8,15 @@ package main
 
 import (
 	"flag"
-	log "github.com/sirupsen/logrus"
+	vault "kubernetes-vault-kms-plugin"
 	"net"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"
-        pb "k8s.io/apiserver/pkg/storage/value/encrypt/envelope/v1beta1"
-	"github.com/oracle/kubernetes-vault-kms-plugin/vault"
 	"golang.org/x/sys/unix"
+	"google.golang.org/grpc"
+	pb "k8s.io/apiserver/pkg/storage/value/encrypt/envelope/v1beta1"
 )
 
 const (
@@ -23,11 +24,12 @@ const (
 )
 
 type CommandArgs struct {
-	socketFile            string
-	vaultConfig           string
+	socketFile  string
+	vaultConfig string
 }
 
-var vaultServer *vault.VaultEnvelopeService 
+var vaultServer *vault.VaultEnvelopeService
+
 // server is used to implement kms plugin grpc server.
 type server struct{}
 
@@ -36,9 +38,9 @@ func (s *server) Version(ctx context.Context, request *pb.VersionRequest) (*pb.V
 	return &pb.VersionResponse{Version: "v1beta1", RuntimeName: "vault", RuntimeVersion: "0.1.0"}, nil
 }
 
-func (s *server) Decrypt(ctx context.Context, request *pb.DecryptRequest) (*pb.DecryptResponse, error) { 
+func (s *server) Decrypt(ctx context.Context, request *pb.DecryptRequest) (*pb.DecryptResponse, error) {
 	plain, err := vaultServer.Decrypt(request.Cipher)
-	if err != nil{
+	if err != nil {
 		log.Warnf("Decrypt error: %v", err)
 		return nil, err
 	}
@@ -47,10 +49,10 @@ func (s *server) Decrypt(ctx context.Context, request *pb.DecryptRequest) (*pb.D
 
 func (s *server) Encrypt(ctx context.Context, request *pb.EncryptRequest) (*pb.EncryptResponse, error) {
 	cipher, err := vaultServer.Encrypt(request.Plain)
-	if err != nil{
-                log.Warnf("Encrypt error: %v", err)
+	if err != nil {
+		log.Warnf("Encrypt error: %v", err)
 		return nil, err
-        }
+	}
 	return &pb.EncryptResponse{Cipher: cipher}, nil
 }
 
@@ -58,28 +60,25 @@ func parseCmd() CommandArgs {
 	socketFile := flag.String("socketFile", "", "socket file that gRpc server listens to")
 	vaultConfig := flag.String("vaultConfig", "", "vault config file location")
 	flag.Parse()
-	
+
 	if len(*socketFile) == 0 {
 		log.Fatal("socketFile parameter not specified")
 	}
 
 	if len(*vaultConfig) == 0 {
 		log.Fatal("vaultConfig parameter not specified")
-        }
+	}
 
-
-        cmdArgs := CommandArgs{
-		socketFile:            *socketFile,
-		vaultConfig:           *vaultConfig,
+	cmdArgs := CommandArgs{
+		socketFile:  *socketFile,
+		vaultConfig: *vaultConfig,
 	}
 	return cmdArgs
 }
 
-
 func main() {
 	/**********************parse command line arguments*******************/
 	cmdArgs := parseCmd()
-      
 
 	// TODO clean sock file first
 	err := unix.Unlink(cmdArgs.socketFile)
@@ -89,8 +88,8 @@ func main() {
 	}
 	vs, err2 := vault.KMSFactory(f)
 	if err2 != nil {
-                log.Fatalf("failed to initialize vault service, error: %v", err2)
-        }
+		log.Fatalf("failed to initialize vault service, error: %v", err2)
+	}
 	vaultServer = vs
 	listener, err := net.Listen("unix", cmdArgs.socketFile)
 	if err != nil {
@@ -99,8 +98,8 @@ func main() {
 
 	s := grpc.NewServer()
 	pb.RegisterKeyManagementServiceServer(s, &server{})
-        log.Infof("Version: %s, runtimeName: %s, RuntimeVersion: %s", "v1beta1", "vault", "0.1.0")
-        if err := s.Serve(listener); err != nil {
-                log.Fatalf("failed to serve: %v", err)
-        }   
+	log.Infof("Version: %s, runtimeName: %s, RuntimeVersion: %s", "v1beta1", "vault", "0.1.0")
+	if err := s.Serve(listener); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }

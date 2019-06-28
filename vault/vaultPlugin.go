@@ -18,7 +18,6 @@ import (
 
 	"github.com/ghodss/yaml"
 	log "github.com/sirupsen/logrus"
-
 )
 
 var once sync.Once
