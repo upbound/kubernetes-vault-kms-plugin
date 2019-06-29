@@ -5,9 +5,7 @@ jobs:
       - image: circleci/golang:latest
     steps:
       - checkout
-      - run: cd vault
-      - run: go test
-      - run: curl -sL https://git.io/goreleaser | bash
+      - run: cd vault && go test && curl -sL https://git.io/goreleaser | bash
 workflows:
   version: 2
   release:
