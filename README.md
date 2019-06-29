@@ -1,5 +1,7 @@
 # Kubernetes KMS Plugin Provider for HashiCorp Vault
 
+[![CircleCI](https://circleci.com/gh/funkypenguin/kubernetes-vault-kms-plugin.svg?style=svg)](https://circleci.com/gh/funkypenguin/kubernetes-vault-kms-plugin)
+
 Kubernetes 1.10 ([PR 55684](https://github.com/kubernetes/kubernetes/pull/55684), [Docs](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/)) added the ability to:
 * Abstract the encryption provider from the Kubernetes API server
 * Manage the encryption external to the Kubernetes cluster in a remote KMS
@@ -38,7 +40,7 @@ To start the plugin provider:
 keyNames:
   - kube-secret-enc-key
 transitPath: /transit
-ca-cert: /home/me/ca.cert
+vaultCACert: /home/me/ca.cert
 addr: https://example.com:8200
 token: <token>
 ```

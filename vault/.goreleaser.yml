@@ -10,12 +10,17 @@ builds:
 - main: server/grpcServer.go
   env:
   - CGO_ENABLED=0
-archives:
-- format: gz
-- wrap_in_directory: false
-- files:
+  goos:
+    - linux
+  goarch:
+    - amd64
+
+archive:
+  format: binary
+  wrap_in_directory: false
+  files:
   - none*
-- replacements:
+  replacements:
     darwin: Darwin
     linux: Linux
     windows: Windows
