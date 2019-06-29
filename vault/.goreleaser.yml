@@ -11,6 +11,10 @@ builds:
   env:
   - CGO_ENABLED=0
 archives:
+- format: gz
+- wrap_in_directory: false
+- files:
+  - none*
 - replacements:
     darwin: Darwin
     linux: Linux
@@ -27,6 +31,3 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-release:
-  draft: true
-  disable: false
