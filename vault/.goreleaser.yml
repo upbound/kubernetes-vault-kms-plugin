@@ -17,8 +17,8 @@ builds:
 
 archives:
   - id: default
-    format: binary
-    wrap_in_directory: false
+    format: tar.gz
+    wrap_in_directory: true
     files:
     - none*
     replacements:
