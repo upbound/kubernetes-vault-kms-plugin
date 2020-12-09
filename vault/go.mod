@@ -1,4 +1,4 @@
-module kubernetes-vault-kms-plugin
+module github.com/turkenh/kubernetes-vault-kms-plugin
 
 go 1.12
 

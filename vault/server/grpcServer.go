@@ -8,7 +8,6 @@ package main
 
 import (
 	"flag"
-	vault "kubernetes-vault-kms-plugin"
 	"net"
 	"os"
 
@@ -17,6 +16,8 @@ import (
 	"golang.org/x/sys/unix"
 	"google.golang.org/grpc"
 	pb "k8s.io/apiserver/pkg/storage/value/encrypt/envelope/v1beta1"
+
+	vault "github.com/turkenh/kubernetes-vault-kms-plugin"
 )
 
 const (
