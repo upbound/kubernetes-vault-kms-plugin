@@ -31,7 +31,8 @@ type EnvelopeConfig struct {
 	Address string `json:"addr"`
 
 	// Token authentication information
-	Token string `json:"token"`
+	Token     string `json:"token"`
+	TokenFile string `json:"tokenFile"`
 
 	// TLS certificate authentication information
 	ClientCert string `json:"clientCert"`
@@ -97,6 +98,10 @@ func validateAuthConfig(config *EnvelopeConfig) error {
 	count := 0
 
 	if config.Token != "" {
+		count++
+	}
+
+	if config.TokenFile != "" {
 		count++
 	}
 

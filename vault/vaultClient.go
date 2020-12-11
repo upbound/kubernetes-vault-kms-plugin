@@ -10,6 +10,7 @@ package vault
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"path"
 	"reflect"
@@ -104,6 +105,12 @@ func (c *clientWrapper) getInitialToken(config *EnvelopeConfig) error {
 			return fmt.Errorf("rotating token through app role backend: %v", err)
 		}
 		c.client.SetToken(token)
+	case config.TokenFile != "":
+		token, err := c.tokenFromFile(config)
+		if err != nil {
+			return fmt.Errorf("rotating token through token file: %v", err)
+		}
+		c.client.SetToken(token)
 	default:
 		// configuration has already been validated, flow should not reach here
 		return errors.New("the Vault authentication configuration is invalid")
@@ -132,6 +139,15 @@ func (c *clientWrapper) appRoleToken(config *EnvelopeConfig) (string, error) {
 	}
 
 	return resp.Auth.ClientToken, nil
+}
+
+func (c *clientWrapper) tokenFromFile(config *EnvelopeConfig) (string, error) {
+	data, err := ioutil.ReadFile(config.TokenFile)
+	if err != nil {
+		return "", err
+	}
+
+	return strings.TrimSpace(string(data)), nil
 }
 
 func (c *clientWrapper) decryptLocked(keyName string, cipher string) (string, error) {

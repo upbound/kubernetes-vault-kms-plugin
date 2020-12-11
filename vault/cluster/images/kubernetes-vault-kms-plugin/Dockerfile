@@ -1,5 +1,5 @@
 FROM BASEIMAGE
-RUN apk --no-cache add ca-certificates bash
+RUN apk --no-cache add ca-certificates
 
 ARG ARCH
 
