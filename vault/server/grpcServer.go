@@ -20,10 +20,6 @@ import (
 	vault "github.com/turkenh/kubernetes-vault-kms-plugin"
 )
 
-const (
-	port = ":50051"
-)
-
 type CommandArgs struct {
 	socketFile  string
 	vaultConfig string
@@ -82,10 +78,10 @@ func main() {
 	cmdArgs := parseCmd()
 
 	// TODO clean sock file first
-	err := unix.Unlink(cmdArgs.socketFile)
+	_ = unix.Unlink(cmdArgs.socketFile)
 	f, err := os.Open(cmdArgs.vaultConfig)
 	if err != nil {
-		log.Fatal("failed to read config file")
+		log.Fatalf("failed to read config file: %v", err)
 	}
 	vs, err2 := vault.KMSFactory(f)
 	if err2 != nil {

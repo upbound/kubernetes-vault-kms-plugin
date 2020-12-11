@@ -13,7 +13,6 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
-
 )
 
 const (
@@ -60,7 +59,7 @@ func TestOneKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("fail to decrypt data with Vault, %s ", err)
 	}
-	if bytes.Compare(untransformedData, originalText) != 0 {
+	if !bytes.Equal(untransformedData, originalText) {
 		t.Fatalf("transformed data incorrectly. Expected: %v, got %v", originalText, untransformedData)
 	}
 }
@@ -196,7 +195,7 @@ func TestWithRefreshToken(t *testing.T) {
 	if encryptCount != 2 {
 		t.Errorf("expect call decrypt 2 times, but %d times", decryptCount)
 	}
-	if bytes.Compare(untransformedData, originalText) != 0 {
+	if !bytes.Equal(untransformedData, originalText) {
 		t.Fatalf("transformed data incorrectly. Expected: %v, got %v", originalText, untransformedData)
 	}
 }

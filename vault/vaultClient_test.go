@@ -4,7 +4,6 @@ Copyright © 2018, Oracle and/or its affiliates. All rights reserved.
 The Universal Permissive License (UPL), Version 1.0
 */
 
-
 // Package vault implements envelop encryption provider based on Vault KMS
 package vault
 
@@ -396,7 +395,7 @@ func buildResponse(w http.ResponseWriter, data map[string]interface{}) {
 		Data:      data,
 	}
 
-	json.NewEncoder(w).Encode(&secret)
+	_ = json.NewEncoder(w).Encode(&secret)
 }
 
 // Response for login request, a client token is generated.
@@ -406,5 +405,5 @@ func buildAuthResponse(w http.ResponseWriter) {
 		Auth:      &api.SecretAuth{ClientToken: uuid.NewRandom().String()},
 	}
 
-	json.NewEncoder(w).Encode(&secret)
+	_ = json.NewEncoder(w).Encode(&secret)
 }

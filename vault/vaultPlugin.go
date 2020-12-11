@@ -20,8 +20,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var once sync.Once
-
 const vaultPrefix = "vault"
 
 //EnvelopeConfig contains connection information for Vault transformer
