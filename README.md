@@ -1,7 +1,5 @@
 # Kubernetes KMS Plugin Provider for HashiCorp Vault
 
-[![CircleCI](https://circleci.com/gh/funkypenguin/kubernetes-vault-kms-plugin.svg?style=svg)](https://circleci.com/gh/funkypenguin/kubernetes-vault-kms-plugin)
-
 Kubernetes 1.10 ([PR 55684](https://github.com/kubernetes/kubernetes/pull/55684), [Docs](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/)) added the ability to:
 * Abstract the encryption provider from the Kubernetes API server
 * Manage the encryption external to the Kubernetes cluster in a remote KMS
@@ -25,10 +23,8 @@ The Kubernetes KMS Plugin Provider for HashiCorp Vault has the following require
 # Building the KMS plugin provider for HashiCorp Vault
 To build the KMS plugin provider:
 ```
-mkdir -p $GOHOME/github.com/oracle
-cd $GOHOME/github.com/oracle
-git clone git@github.com:oracle/kubernetes-vault-kms-plugin.git
-go install github.com/oracle/kubernetes-vault-kms-plugin/vault/server
+cd vault
+make build
 ```
 
 # Starting the KMS plugin provider for HashiCorp Vault  

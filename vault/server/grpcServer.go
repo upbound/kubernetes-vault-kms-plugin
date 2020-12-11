@@ -17,7 +17,7 @@ import (
 	"google.golang.org/grpc"
 	pb "k8s.io/apiserver/pkg/storage/value/encrypt/envelope/v1beta1"
 
-	vault "github.com/turkenh/kubernetes-vault-kms-plugin"
+	vault "github.com/upbound/kubernetes-vault-kms-plugin"
 )
 
 type CommandArgs struct {
